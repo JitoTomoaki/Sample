@@ -18,6 +18,7 @@ public class ExperimentShotMove : MonoBehaviour {
 
     public GameObject ball;
 
+
     public int RallyCount = 0; //ラリーの回数をカウントする変数
     public Text RallyCountText;
     public GameObject Canvas;
@@ -28,41 +29,22 @@ public class ExperimentShotMove : MonoBehaviour {
     // バウンド位置を格納する配列
     int[,] BoundPoint = new int[100,100];
 
+    Vector3 MiddlePosition = new Vector3(0, 40, 0);
+    Vector3 EndPosition = new Vector3(1370, 400, 0);
+    Vector3 StartPosition = new Vector3(-1370, 400, 0);
+
+    int speed = 20;//ボールの速度
+
+    bool HarfFlug = false;
+    bool GoFlag = true;
+
+
+
 	void Start () 
     {
-
+        ball.transform.position = StartPosition;
 	}
 
-    // Update is called once per frame
-
-    /*
-    IEnumerator Capture()
-    {
-        for (int i = 0; i < 29; i++)
-        {
-            //ボールの配置
-            ball.transform.position = new Vector3(ballPoint[i, 0], 25f, ballPoint[i, 1]);
-
-            //カメラ1の撮影
-            Camera.transform.position = Camera1_Point;//カメラ1の位置にカメラ移動
-            Camera.transform.rotation = Quaternion.Euler(11, 45, 0);//カメラ1の位置にカメラを回転させる
-            ScreenCapture.CaptureScreenshot(Application.dataPath + "/ExperimentData/Point" + (i + 1).ToString() + "_Camera1.png");
-            yield return new WaitForSeconds(0.1f);
-
-            //カメラ2の撮影
-            Camera.transform.position = Camera2_Point;//カメラ2の位置にカメラ移動
-            Camera.transform.rotation = Quaternion.Euler(11, -45, 0);//カメラ2の位置にカメラを回転させる
-            ScreenCapture.CaptureScreenshot(Application.dataPath + "/ExperimentData/Point" + (i + 1).ToString() + "_Camera2.png");
-
-            yield return new WaitForSeconds(0.1f);
-        }
-    }*/
-
-    /// <summary>
-    /// ////////////////////////////////////////////////////////ここからが新システム
-    /// </summary>
-    /// 
-    /// 
 
     public void GetBound_Data()
     {
@@ -93,23 +75,61 @@ public class ExperimentShotMove : MonoBehaviour {
 
     }
 
-    Vector3 StartPosition = new Vector3(-1370, 400, 0);
-    Vector3 EndPosition =  new Vector3(1370, 400, 0);
-    Vector3 NextPos;
-    int NowBound = 0; //今のバウンドを記録する変数
-    bool StartFlug = false;
-
-
-    GameObject Canvas1;
-
     public void RallyStart()
     {
-        Canvas.SetActive(false);
+        
     }
 
     void Update()
     {
-        ball.transform.position = Vector3.MoveTowards(ball.transform.position, StartPosition, 3);//(自分の場所,次の場所,速度)
+        if(GoFlag == true)//行きのプログラム
+        {
+            if (HarfFlug == false)
+            {
+                ball.transform.position = Vector3.MoveTowards(ball.transform.position, MiddlePosition, speed);//(自分の場所,次の場所,速度)
+
+                if (ball.transform.position.x >= MiddlePosition.x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
+                {
+                    HarfFlug = true;//行きの半分きとよ
+                }
+            }
+            else if (HarfFlug == true)
+            {
+                ball.transform.position = Vector3.MoveTowards(ball.transform.position, EndPosition, speed);//(自分の場所,次の場所,速度)
+
+                if (ball.transform.position.x >= EndPosition.x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
+                {
+                    HarfFlug = false;//行きは終了
+                    GoFlag = false;//ここから帰りよ
+                }
+            }
+        }
+
+
+        else if (GoFlag == false)//帰りプログラム
+        {
+            if (HarfFlug == false)
+            {
+                ball.transform.position = Vector3.MoveTowards(ball.transform.position, MiddlePosition, speed);//(自分の場所,次の場所,速度)
+
+                if (ball.transform.position.x <= MiddlePosition.x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
+                {
+                    HarfFlug = true;//行きの半分きとよ
+                }
+            }
+            else if (HarfFlug == true)
+            {
+                ball.transform.position = Vector3.MoveTowards(ball.transform.position, StartPosition, speed);//(自分の場所,次の場所,速度)
+
+                if (ball.transform.position.x <= StartPosition.x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
+                {
+                    HarfFlug = false;//行きは終了
+                    GoFlag = true;//ここから行きよ
+                }
+            }
+        }
+
+
 
     }
 
