@@ -91,7 +91,6 @@ public class ExperimentShotMove : MonoBehaviour {
         inputField_X.text = "";
         inputField_Z.text = "";
 
-
     }
 
     Vector3 StartPosition = new Vector3(-1370, 400, 0);
@@ -106,36 +105,13 @@ public class ExperimentShotMove : MonoBehaviour {
     public void RallyStart()
     {
         Canvas.SetActive(false);
-        ball.SetActive(true);
-
     }
 
     void Update()
     {
-        NextPos = new Vector3(-1370, 40,  500);
-        ball.transform.position = Vector3.MoveTowards(StartPosition, NextPos, 6);
+        ball.transform.position = Vector3.MoveTowards(ball.transform.position, StartPosition, 3);//(自分の場所,次の場所,速度)
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     IEnumerator NewCapture()
     {

@@ -108,10 +108,10 @@
     <Compile Include="Assets\Unity Technologies\Recorder\Framework\Recorders\AnimationRecorder\Editor\AnimationRecorderSettingsEditor.cs" />
     <Compile Include="Assets\Unity Technologies\Recorder\Framework\Recorders\ImageRecorder\Editor\ImageRecorderEditor.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>/Users/jito/Desktop/PingPongField/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>/Users/jito/github/PingPongField/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>/Users/jito/Desktop/PingPongField/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>/Users/jito/github/PingPongField/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
