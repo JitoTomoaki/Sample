@@ -33,10 +33,13 @@ public class ExperimentShotMove : MonoBehaviour {
     Vector3 EndPosition = new Vector3(1370, 400, 0);
     Vector3 StartPosition = new Vector3(-1370, 400, 0);
 
+    Vector3[] Bound_Data = new Vector3[100];
+
     int speed = 20;//ボールの速度
 
     bool HarfFlug = false;
     bool GoFlag = true;
+    bool RallyStart_flug = false;
 
 
 
@@ -53,18 +56,10 @@ public class ExperimentShotMove : MonoBehaviour {
         int InputData_X = int.Parse(inputField_X.text);
         int InputData_Z = int.Parse(inputField_Z.text);
 
-
-
         //配列にデータを格納
         BoundPoint[RallyCount,0] = InputData_X;
         BoundPoint[RallyCount,1] = InputData_Z;
-
-
-
-        Debug.Log(BoundPoint[RallyCount, 0]);
-        Debug.Log(BoundPoint[RallyCount, 1]);
-
-
+        Bound_Data[RallyCount] = new Vector3(InputData_X, 40, InputData_Z);
 
         RallyCount++;//ラリーカウントをプラス1する
         RallyCountText.text = "バウンド数 : " + RallyCount.ToString();
@@ -77,61 +72,71 @@ public class ExperimentShotMove : MonoBehaviour {
 
     public void RallyStart()
     {
-        
+        RallyStart_flug = true;
+        RallyCount = 0; //RallyCountのリセット
     }
 
     void Update()
     {
-        if(GoFlag == true)//行きのプログラム
+        if(RallyStart_flug == true)
         {
-            if (HarfFlug == false)
+            if (GoFlag == true)//行きのプログラム
             {
-                ball.transform.position = Vector3.MoveTowards(ball.transform.position, MiddlePosition, speed);//(自分の場所,次の場所,速度)
-
-                if (ball.transform.position.x >= MiddlePosition.x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
+                if (HarfFlug == false)
                 {
-                    HarfFlug = true;//行きの半分きとよ
+                    ball.transform.position = Vector3.MoveTowards(ball.transform.position, Bound_Data[RallyCount], speed);//(自分の場所,次の場所,速度)
+
+                    if (ball.transform.position.x >= Bound_Data[RallyCount].x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
+                    {
+                        HarfFlug = true;//行きの半分きとよ
+                    }
+                }
+                else if (HarfFlug == true)
+                {
+                    ball.transform.position = Vector3.MoveTowards(ball.transform.position, EndPosition, speed);//(自分の場所,次の場所,速度)
+
+                    if (ball.transform.position.x >= EndPosition.x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
+                    {
+                        HarfFlug = false;//行きは終了
+                        GoFlag = false;//ここから帰りよ
+                        RallyCount++;
+                    }
                 }
             }
-            else if (HarfFlug == true)
-            {
-                ball.transform.position = Vector3.MoveTowards(ball.transform.position, EndPosition, speed);//(自分の場所,次の場所,速度)
 
-                if (ball.transform.position.x >= EndPosition.x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
+
+            else if (GoFlag == false)//帰りプログラム
+            {
+                if (HarfFlug == false)
                 {
-                    HarfFlug = false;//行きは終了
-                    GoFlag = false;//ここから帰りよ
+                    ball.transform.position = Vector3.MoveTowards(ball.transform.position, Bound_Data[RallyCount], speed);//(自分の場所,次の場所,速度)
+
+                    if (ball.transform.position.x <= Bound_Data[RallyCount].x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
+                    {
+                        HarfFlug = true;//行きの半分きとよ
+                    }
+                }
+                else if (HarfFlug == true)
+                {
+                    ball.transform.position = Vector3.MoveTowards(ball.transform.position, StartPosition, speed);//(自分の場所,次の場所,速度)
+
+                    if (ball.transform.position.x <= StartPosition.x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
+                    {
+                        HarfFlug = false;//行きは終了
+                        GoFlag = true;//ここから行きよ
+                        RallyCount++;
+                    }
                 }
             }
+
         }
-
-
-        else if (GoFlag == false)//帰りプログラム
-        {
-            if (HarfFlug == false)
-            {
-                ball.transform.position = Vector3.MoveTowards(ball.transform.position, MiddlePosition, speed);//(自分の場所,次の場所,速度)
-
-                if (ball.transform.position.x <= MiddlePosition.x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
-                {
-                    HarfFlug = true;//行きの半分きとよ
-                }
-            }
-            else if (HarfFlug == true)
-            {
-                ball.transform.position = Vector3.MoveTowards(ball.transform.position, StartPosition, speed);//(自分の場所,次の場所,速度)
-
-                if (ball.transform.position.x <= StartPosition.x)//もしバウンド位置についてら(Xの座標がバウンド位置についたら)
-                {
-                    HarfFlug = false;//行きは終了
-                    GoFlag = true;//ここから行きよ
-                }
-            }
-        }
-
-
 
     }
+
+    /// <summary>
+    /// ///////////ここは旧システム
+    /// </summary>
+    /// <returns>The capture.</returns>
 
     IEnumerator NewCapture()
     {
