@@ -10,6 +10,5 @@ int main()
   cout << "Sample124 ブランチ";
   cout << "Sample127 ブランチ";
   cout << "Sample129 ブランチ";
-  cout << "変更したよ";
   return 0;
 }
