@@ -14,30 +14,30 @@ r4 = [] #見つけた領域を保存しておくリスト
 r3 = [] #見つけた領域を保存しておくリスト
 
 
-CalibrationData_Number = 29 #キャリブレーションに必要な写真の数
+CalibrationData_Number =29 #キャリブレーションに必要な写真の数
 
 def Camera1():
     #ファイルの数を数える
     files = os.listdir('../ExperimentData')
-    count = 0 #ディレクトリのファイルを数えるための変数
+    count = 0#ディレクトリのファイルを数えるための変数
 
     for file in files:
         index = re.search('.png',file) #pngのファイルを探す
         if index: #pngのファイルであれば
             count = count + 1
-    DataCount = count/4 - CalibrationData_Number #何個の追加写真があるのか数える
+    DataCount = count/4 -CalibrationData_Number; #何個の追加写真があるのか数える
 
     #print(int(DataCount),"バウンド")
 
     for i in range(29 + int(DataCount)):
         #print(i+1,"枚目")
-        img1 = cv2.imread("../ExperimentData/Point"+str(i+1)+"_Camera1.png")
-        img2 = cv2.imread("../ExperimentData/Point29_Camera1.png")#背景は29番の画像
+        img1 =cv2.imread("../ExperimentData/Point"+str(i+1)+"_Camera1.png")
+        img2 =cv2.imread("../ExperimentData/Point29_Camera1.png")#背景は29番の画像
 
         img_gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
         img_gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
-        th = 1 #閾値の決定
+        th=1#閾値の決定
         mask = cv2.absdiff(img_gray1,img_gray2)
 
         # 差分画像を二値化してマスク画像を算出
@@ -78,7 +78,7 @@ def Camera2():
         index = re.search('.png',file) #pngのファイルを探す
         if index: #pngのファイルであれば
             count = count + 1
-    DataCount = count/4 - CalibrationData_Number #何個の追加写真があるのか数える
+    DataCount = count/4 - CalibrationData_Number; #何個の追加写真があるのか数える
 
     for i in range(29 + int(DataCount)):
         #print(i+1,"枚目")
@@ -148,4 +148,4 @@ for i in range(100):
     ws["A"+str(i+30)] = str(1+i)+"バウンド"
 
 
-wb.save("../PingPong_Expriment.xlsx")
+wb.save("../PingPong_Expriment1.xlsx")
