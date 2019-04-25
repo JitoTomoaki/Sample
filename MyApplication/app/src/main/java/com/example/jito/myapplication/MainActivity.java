@@ -2,8 +2,10 @@ package com.example.jito.myapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -11,9 +13,27 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    protected void onCreate(Bundle savedInstanceState) {
+
+
+    protected void onCreate(Bundle savedInstanceState)
+    {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Button button1 = (Button)findViewById(R.id.button);
+        final TextView Sample_Text = (TextView)findViewById(R.id.text);
+
+        button1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Log.d("OnClick", "This is a log message");
+            }
+        });
+
 
     }
 }
