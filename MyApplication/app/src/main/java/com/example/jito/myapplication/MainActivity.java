@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button button1 = (Button)findViewById(R.id.button);
-        final TextView Sample_Text = (TextView)findViewById(R.id.text);
+
 
         button1.setOnClickListener(new View.OnClickListener()
         {
@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 Log.d("OnClick", "This is a log message");
+                Toast toast = Toast.makeText(MainActivity.this, "Toastのテストだよ!", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
 
