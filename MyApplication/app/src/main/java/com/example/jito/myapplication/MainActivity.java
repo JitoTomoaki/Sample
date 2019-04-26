@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        Button button1 = (Button)findViewById(R.id.button);
+        Button button1 = (Button)findViewById(R.id.button7);
 
 
         button1.setOnClickListener(new View.OnClickListener()
