@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+    TextView textView;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -22,7 +22,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        Button button1 = (Button)findViewById(R.id.button7);
+        Button button1 = (Button)findViewById(R.id.button1);
+        Button button2 = (Button)findViewById(R.id.button2);
+
+        textView = findViewById(R.id.textView);
 
 
         button1.setOnClickListener(new View.OnClickListener()
@@ -33,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("OnClick", "This is a log message");
                 Toast toast = Toast.makeText(MainActivity.this, "Toastのテストだよ!", Toast.LENGTH_LONG);
                 toast.show();
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                textView.setText("Test TextView");
             }
         });
 
